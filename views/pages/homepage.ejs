@@ -1,0 +1,66 @@
+<% 
+var me = req.session.userId;
+if(typeof me === 'undefined') {
+  me = undefined;
+} %>
+
+
+<% if(me) { %>
+
+    <div class="row">
+        <h2 style="text-align: right;"><a href="/add" class="btn btn-outline-info">Add</a></h2>
+    </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Body</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% app.forEach(function(applicant){ %>
+                <tr>
+                    <td><%= applicant.id %></td>
+                    <td><%= applicant.title %></td>
+                    <td><%= applicant.subject %></td>
+                    <td><%= applicant.body %></td>
+                    <td>
+                        <form action="/edit" method="POST">
+                            <input type="hidden" name="id" value="<%= applicant.id %>"/>
+                            <input type="submit" class="btn btn-primary" value="Edit">
+                        </form>
+                    </td><td>
+                        <form action="/delete" method="POST">
+                            <input type="hidden" name="iddel" value="<%= applicant.id %>"/>
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+
+                </tr>
+               
+            <% }); %>
+            
+          <!-- <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td><a href='/edit'>Edit</a></td>
+          </tr> -->
+        
+        </tbody>
+    </table>
+    <% images.forEach(function(img){ %>
+      <img src="<%= img.image %>" style="width:100px;margin:20px;"/>
+    <% }); %>
+
+
+<% }else{ %>
+<h1 class="display-5">Welcome Sails login</h1>
+<p class="mb-4">Please  Login to write</p>
+<a href="/login" class="btn btn-light">Login</a>
+<a href="/signup" class="btn btn-light">Sign up</a>
+<% } %>
